@@ -188,5 +188,154 @@ Para obtener la lista completa de dependencias instaladas y sus versiones actual
 composer show
 ```
 
+
+# Guía para Ejecutar las Pruebas
+
+El siguiente documento explica cómo ejecutar las pruebas unitarias de este proyecto y su propósito.
+
+---
+
+## Requisitos previos
+Asegúrate de tener los siguientes requisitos instalados y configurados en tu entorno:
+1. **PHP**: Versión compatible con Laravel (ver `composer.json`).
+2. **Composer**: Administrador de dependencias para PHP.
+4. **Migraciones**: Deben ejecutarse antes de las pruebas (se detalla más adelante).
+
+---
+
+## Preparación del entorno de pruebas
+
+### 1. Instala las dependencias
+Asegúrate de que todas las dependencias estén instaladas ejecutando:
+```bash
+composer install
+```
+
+---
+
+## Ejecución de pruebas
+
+Asegurate de tener las tablas y su contenido cargado utilizando el siguiente comando:
+```bash
+php artisan migrate:fresh --seed
+```
+Puedes ejecutar todas las pruebas del proyecto utilizando el siguiente comando:
+```bash
+php artisan test
+```
+
+### Ejecución detallada
+Si deseas filtrar las pruebas por una clase o método específico, utiliza el flag `--filter`:
+```bash
+php artisan test --filter=AuthControllerTest
+```
+
+Esto ejecutará únicamente las pruebas definidas en `AuthControllerTest`.
+
+### Salida esperada
+Cuando las pruebas son exitosas, deberías ver algo similar a esto:
+```plaintext
+Tests:    23 passed (279 assertions)
+Duration: 1.59s
+```
+
+---
+
+## Significado de las pruebas
+
+### **AuthControllerTest**
+1. **Registers user successfully**  
+   Valida que un usuario pueda registrarse correctamente y recibir un token de acceso en la respuesta.
+
+2. **Registration fails with invalid data**  
+   Verifica que el registro de usuario falle si se envían datos inválidos, devolviendo los errores correspondientes.
+
+3. **Logs in user successfully**  
+   Comprueba que un usuario pueda iniciar sesión correctamente utilizando credenciales válidas, obteniendo un token de acceso.
+
+4. **Login fails with invalid credentials**  
+   Valida que el intento de inicio de sesión falle si las credenciales proporcionadas no son válidas, devolviendo el código de error `401`.
+
+5. **Revokes existing tokens on login**  
+   Garantiza que todos los tokens de acceso previos de un usuario sean revocados cuando inicie sesión nuevamente.
+
+---
+
+### **AuthorControllerTest**
+1. **Can fetch paginated authors**  
+   Comprueba que la lista de autores se pueda obtener de forma paginada.
+
+2. **Can fetch author by id**  
+   Valida que un autor pueda ser consultado individualmente por su ID.
+
+3. **Fetching non-existent author returns 404**  
+   Verifica que al intentar consultar un autor que no existe, se devuelva un error `404`.
+
+4. **Can create author**  
+   Valida que se pueda crear un nuevo autor enviando los datos correctos.
+
+5. **Creating author with invalid data returns errors**  
+   Comprueba que al intentar crear un autor con datos inválidos, se devuelvan los errores correspondientes.
+
+6. **Can update author**  
+   Verifica que un autor existente pueda ser actualizado correctamente.
+
+7. **Updating non-existent author returns 404**  
+   Comprueba que al intentar actualizar un autor que no existe, se devuelva un error `404`.
+
+8. **Can delete author**  
+   Valida que un autor pueda ser eliminado correctamente.
+
+9. **Deleting non-existent author returns 404**  
+   Garantiza que al intentar eliminar un autor que no existe, se devuelva un error `404`.
+
+---
+
+### **BookControllerTest**
+1. **Can fetch paginated books**  
+   Comprueba que la lista de libros se pueda obtener de forma paginada.
+
+2. **Can fetch book by id**  
+   Valida que un libro pueda ser consultado individualmente por su ID.
+
+3. **Fetching non-existent book returns 404**  
+   Verifica que al intentar consultar un libro que no existe, se devuelva un error `404`.
+
+4. **Can create book**  
+   Valida que se pueda crear un nuevo libro enviando los datos correctos.
+
+5. **Creating book with invalid data returns errors**  
+   Comprueba que al intentar crear un libro con datos inválidos, se devuelvan los errores correspondientes.
+
+6. **Can update book**  
+   Verifica que un libro existente pueda ser actualizado correctamente.
+
+7. **Updating non-existent book returns 404**  
+   Comprueba que al intentar actualizar un libro que no existe, se devuelva un error `404`.
+
+8. **Can delete book**  
+   Valida que un libro pueda ser eliminado correctamente.
+
+9. **Deleting non-existent book returns 404**  
+   Garantiza que al intentar eliminar un libro que no existe, se devuelva un error `404`.
+
+---
+
+## Resolución de problemas comunes
+
+1. **Error: Dependencias faltantes**
+   - Solución: Instala todas las dependencias necesarias ejecutando:
+     ```bash
+     composer install
+     ```
+
+2. **Pruebas fallidas**
+   - Verifica el mensaje de error detallado en la salida de los tests para identificar posibles problemas.
+
+---
+
+Con esta guía, deberías poder ejecutar y comprender las pruebas del proyecto correctamente. Si tienes problemas adicionales, revisa los logs detallados o contacta al equipo de desarrollo.
+
+---
 ---
 Si tienes dudas, no dudes en consultar la documentación generada por Scribe. Puedes acceder a ella localmente desde [http://localhost:8084/docs](http://localhost:8084/docs), dependiendo de tu instalación.
