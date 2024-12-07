@@ -74,8 +74,13 @@ Este documento detalla los pasos para clonar y montar este proyecto Laravel desd
    ```bash
    php artisan migrate
    ```
-
-9. El proyecto estará disponible en [http://localhost:8084](http://localhost:8084).
+   
+9. Asegurate de tener las tablas y su contenido cargado utilizando el siguiente comando:
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+   
+10. El proyecto estará disponible en [http://localhost:8084](http://localhost:8084).
 
 ---
 
