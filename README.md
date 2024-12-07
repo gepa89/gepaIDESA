@@ -186,7 +186,7 @@ Este proyecto utiliza las siguientes dependencias, administradas por Composer:
 Para obtener la lista completa de dependencias instaladas y sus versiones actuales, puedes ejecutar:
 ```bash
 composer show
-
+```
 
 ---
 Si tienes dudas, no dudes en consultar la documentación generada por Scribe. Puedes acceder a ella localmente desde [http://localhost:8084/docs](http://localhost:8084/docs), dependiendo de tu instalación.
