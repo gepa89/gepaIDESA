@@ -733,7 +733,7 @@ paths:
         in: path
         name: id
         description: 'Author ID.'
-        example: 17
+        example: 1
         required: true
         schema:
           type: integer
@@ -1323,7 +1323,7 @@ paths:
         in: path
         name: id
         description: 'Book ID.'
-        example: 18
+        example: 9
         required: true
         schema:
           type: integer

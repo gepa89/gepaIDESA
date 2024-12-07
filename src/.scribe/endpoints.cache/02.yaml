@@ -270,14 +270,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 18
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 18
+      id: 9
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -484,14 +484,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 9
+        example: 15
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 9
+      id: 15
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

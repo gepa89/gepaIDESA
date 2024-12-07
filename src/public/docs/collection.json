@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "453bdc36-9659-43e6-9bfd-ff80658be0fc",
+        "_postman_id": "c514d12d-2b43-4eba-a7a9-8e879497ae4c",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -282,7 +282,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "17",
+                                    "value": "1",
                                     "description": "Author ID."
                                 }
                             ]
@@ -347,7 +347,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "2",
+                                    "value": "1",
                                     "description": "Author ID."
                                 }
                             ]
@@ -415,7 +415,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "11",
+                                    "value": "19",
                                     "description": "Author ID."
                                 }
                             ]
@@ -617,7 +617,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "18",
+                                    "value": "9",
                                     "description": "Book ID."
                                 }
                             ]
@@ -750,7 +750,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "9",
+                                    "value": "15",
                                     "description": "Book ID."
                                 }
                             ]
