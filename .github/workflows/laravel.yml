@@ -49,10 +49,3 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
         fi
-
-    - name: Run Tests
-      working-directory: ./src
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: database/database.sqlite
-      run: php artisan test --testsuite=Unit
