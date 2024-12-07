@@ -25,7 +25,7 @@ class BookController extends Controller
     private const SUCCESS_DELETE_BOOK = 'Book deleted successfully.';
 
     /**
-     * Get a paginated list of books.
+     * Get a paginated, filtered, and sorted list of books.
      *
      * @group Books
      *
@@ -34,6 +34,10 @@ class BookController extends Controller
      * @header Accept-Version string required The version of the API to use. Example: v1
      *
      * @urlParam per_page int Optional. Number of books per page. Defaults to 10. Example: 20
+     * @urlParam title string Optional. Filter by book title. Example: Harry Potter
+     * @urlParam isbn string Optional. Filter by book ISBN. Example: 123-4567890123
+     * @urlParam order_by string Optional. Field to sort by. Defaults to "id". Example: title
+     * @urlParam order_dir string Optional. Sorting direction (asc or desc). Defaults to "asc". Example: desc
      *
      * @response 200 {
      *   "data": [
@@ -62,7 +66,7 @@ class BookController extends Controller
      *   }
      * }
      * @response 400 {
-     *   "message": "Invalid pagination parameters."
+     *   "message": "Invalid pagination or sorting parameters."
      * }
      * @response 500 {
      *   "message": "An error occurred while fetching books."
@@ -74,16 +78,41 @@ class BookController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
+            // Validate pagination parameter
             $perPage = $this->validatePerPage($request);
-            $books = Book::with('author')->paginate($perPage);
+
+            // Get filters and sorting parameters from the request
+            $filters = $request->only(['title', 'isbn']);
+            $orderBy = $request->input('order_by', 'id');
+            $orderDir = $request->input('order_dir', 'asc');
+
+            // Validate sorting direction
+            if (!in_array($orderDir, ['asc', 'desc'])) {
+                return $this->errorResponse('Invalid order direction. Use "asc" or "desc".', 400);
+            }
+
+            // Build query with filters
+            $query = Book::with('author');
+            foreach ($filters as $field => $value) {
+                if (!empty($value)) {
+                    $query->where($field, 'like', "%$value%");
+                }
+            }
+
+            // Apply sorting
+            $query->orderBy($orderBy, $orderDir);
+
+            // Paginate results
+            $books = $query->paginate($perPage);
 
             return $this->successResponse($books);
         } catch (ValidationException $exception) {
-            return $this->errorResponse('Invalid pagination parameters.', 400);
+            return $this->errorResponse('Invalid pagination or sorting parameters.', 400);
         } catch (Throwable $exception) {
             return $this->errorResponse(self::ERR_FETCH_BOOKS, 500);
         }
     }
+
 
     /**
      * Get details of a specific book.

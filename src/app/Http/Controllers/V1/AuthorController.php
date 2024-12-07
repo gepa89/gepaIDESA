@@ -25,7 +25,7 @@ class AuthorController extends Controller
     private const SUCCESS_DELETE_AUTHOR = 'Author deleted successfully.';
 
     /**
-     * Get a paginated list of authors.
+     * Get a paginated, filtered, and sorted list of authors.
      *
      * @group Authors
      *
@@ -34,12 +34,17 @@ class AuthorController extends Controller
      * @header Accept-Version string required The version of the API to use. Example: v1
      *
      * @urlParam per_page int Optional. Number of authors per page. Defaults to 10. Example: 20
+     * @urlParam name string Optional. Filter by author name. Example: John
+     * @urlParam email string Optional. Filter by author email. Example: john@example.com
+     * @urlParam order_by string Optional. Field to sort by. Defaults to "id". Example: name
+     * @urlParam order_dir string Optional. Sorting direction (asc or desc). Defaults to "asc". Example: desc
      *
      * @response 200 {
      *   "data": [
      *       {
      *           "id": 1,
      *           "name": "Author Name",
+     *           "email": "author@example.com",
      *           "birthdate": "1980-01-01",
      *           "nationality": "American"
      *       }
@@ -58,7 +63,7 @@ class AuthorController extends Controller
      *   }
      * }
      * @response 400 {
-     *   "message": "Invalid pagination parameters."
+     *   "message": "Invalid pagination or sorting parameters."
      * }
      * @response 500 {
      *   "message": "An error occurred while fetching authors."
@@ -70,15 +75,41 @@ class AuthorController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
+            // Validate pagination parameter
             $perPage = $this->validatePerPage($request);
-            $authors = Author::paginate($perPage);
+
+            // Get filters and sorting parameters from the request
+            $filters = $request->only(['name', 'email']);
+            $orderBy = $request->input('order_by', 'id');
+            $orderDir = $request->input('order_dir', 'asc');
+
+            // Validate sorting direction
+            if (!in_array($orderDir, ['asc', 'desc'])) {
+                return $this->errorResponse('Invalid order direction. Use "asc" or "desc".', 400);
+            }
+
+            // Build query with filters
+            $query = Author::query();
+            foreach ($filters as $field => $value) {
+                if (!empty($value)) {
+                    $query->where($field, 'like', "%$value%");
+                }
+            }
+
+            // Apply sorting
+            $query->orderBy($orderBy, $orderDir);
+
+            // Paginate results
+            $authors = $query->paginate($perPage);
+
             return $this->successResponse($authors);
         } catch (ValidationException $exception) {
-            return $this->errorResponse('Invalid pagination parameters.', 400);
+            return $this->errorResponse('Invalid pagination or sorting parameters.', 400);
         } catch (Throwable $exception) {
             return $this->errorResponse(self::ERR_FETCH_AUTHORS, 500);
         }
     }
+
 
     /**
      * Get details of a specific author.
