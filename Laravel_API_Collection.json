@@ -1,0 +1,368 @@
+{
+    "info": {
+        "name": "Laravel API Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Register",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/auth/register",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Login",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "List Authors",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/authors",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authors"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Create Author",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/authors",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authors"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Author by ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/authors/{author}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authors",
+                        "{author}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Update Author",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/authors/{author}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authors",
+                        "{author}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Delete Author",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/authors/{author}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "authors",
+                        "{author}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "List Books",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/books",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "books"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Create Book",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/books",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "books"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Book by ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/books/{book}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "books",
+                        "{book}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Update Book",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/books/{book}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "books",
+                        "{book}"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Delete Book",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept-Version",
+                        "value": "v1"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{YOUR_AUTH_TOKEN}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/books/{book}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "books",
+                        "{book}"
+                    ]
+                }
+            }
+        }
+    ]
+}
