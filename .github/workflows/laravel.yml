@@ -12,6 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Navigate to Project Directory
       working-directory: ./src
       run: echo "Moved to src directory"
@@ -24,6 +25,10 @@ jobs:
     - name: Copy .env
       working-directory: ./src
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Update Dependencies
+      working-directory: ./src
+      run: composer update --no-ansi --no-interaction --no-progress --prefer-dist
 
     - name: Install Dependencies
       working-directory: ./src
