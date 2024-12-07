@@ -147,5 +147,46 @@ Este documento detalla los pasos para clonar y montar este proyecto Laravel desd
   
 ---
 
+## Dependencias del Proyecto
 
+Este proyecto utiliza las siguientes dependencias, administradas por Composer:
+
+### Framework principal
+- **laravel/framework**: El marco de trabajo principal de PHP utilizado para este proyecto.
+
+### Dependencias de desarrollo
+- **knuckleswtf/scribe**: Generador automático de documentación para APIs en Laravel.
+- **phpunit/phpunit**: Framework para pruebas unitarias.
+- **nunomaduro/collision**: Manejo de errores para aplicaciones en la línea de comandos.
+- **laravel/sail**: Configuración de Docker para aplicaciones Laravel.
+- **laravel/pint**: Formateador de código para PHP.
+- **laravel/tinker**: REPL para Laravel, utilizado para interactuar con la aplicación desde la línea de comandos.
+
+### Librerías de utilidades
+- **fakerphp/faker**: Generador de datos ficticios, utilizado principalmente en los factories para pruebas.
+- **nesbot/carbon**: Extensión de API para DateTime con soporte multi-idioma.
+- **guzzlehttp/guzzle**: Cliente HTTP para realizar peticiones externas.
+- **symfony/console**: Herramientas para crear interfaces de línea de comandos.
+- **symfony/mailer**: Librería para el envío de correos electrónicos.
+- **fruitcake/php-cors**: Implementación de CORS para solicitudes HTTP.
+- **league/flysystem**: Abstracción para el manejo de sistemas de archivos.
+
+### Dependencias para la documentación
+- **erusev/parsedown**: Parser para Markdown, utilizado en la generación de documentación.
+
+### Herramientas de depuración
+- **filp/whoops**: Manejo de errores con una interfaz amigable.
+- **spatie/laravel-ignition**: Página de errores mejorada para Laravel.
+
+### Otras dependencias clave
+- **psr/http-client**, **psr/http-message**, **psr/container**: Interfaces estándar para HTTP, contenedores y mensajes en PHP.
+- **vlucas/phpdotenv**: Manejo de variables de entorno desde archivos `.env`.
+
+### Consultar todas las dependencias
+Para obtener la lista completa de dependencias instaladas y sus versiones actuales, puedes ejecutar:
+```bash
+composer show
+
+
+---
 Si tienes dudas, no dudes en consultar la documentación generada por Scribe. Puedes acceder a ella localmente desde [http://localhost:8084/docs](http://localhost:8084/docs), dependiendo de tu instalación.
