@@ -12,14 +12,14 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get a list of authors with pagination.'
+      title: 'Get a paginated, filtered, and sorted list of authors.'
       description: ''
       authenticated: false
       custom: []
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required API version to use. Example: v1'
+      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters:
       per_page:
         name: per_page
@@ -31,8 +31,52 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         custom: []
+      name:
+        name: name
+        description: 'Optional. Filter by author name.'
+        required: false
+        example: John
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: 'Optional. Filter by author email.'
+        required: false
+        example: john@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      order_by:
+        name: order_by
+        description: 'Optional. Field to sort by. Defaults to "id".'
+        required: false
+        example: name
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      order_dir:
+        name: order_dir
+        description: 'Optional. Sorting direction (asc or desc). Defaults to "asc".'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
     cleanUrlParameters:
       per_page: 20
+      name: John
+      email: john@example.com
+      order_by: name
+      order_dir: desc
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -47,6 +91,7 @@ endpoints:
                 {
                     "id": 1,
                     "name": "Author Name",
+                    "email": "author@example.com",
                     "birthdate": "1980-01-01",
                     "nationality": "American"
                 }
@@ -63,6 +108,15 @@ endpoints:
                 "per_page": 10,
                 "total": 100
             }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "message": "Invalid pagination or sorting parameters."
           }
         headers: []
         description: ''
@@ -98,7 +152,7 @@ endpoints:
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required API version to use. Example: v1'
+      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters: []
     cleanUrlParameters: []
     queryParameters: []
@@ -195,20 +249,20 @@ endpoints:
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required API version to use. Example: v1'
+      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters:
       id:
         name: id
         description: 'Author ID.'
         required: true
-        example: 9
+        example: 3
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 9
+      id: 3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -261,33 +315,33 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: "Update an existing author's information."
+      title: 'Update an existing author.'
       description: ''
       authenticated: false
       custom: []
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required API version to use. Example: v1'
+      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters:
       id:
         name: id
         description: 'Author ID.'
         required: true
-        example: 11
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 11
+      id: 7
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
       name:
         name: name
-        description: 'Optional The name of the author.'
+        description: 'Optional The updated name of the author.'
         required: false
         example: 'Jane Doe'
         type: string
@@ -297,9 +351,9 @@ endpoints:
         custom: []
       birthdate:
         name: birthdate
-        description: 'Optional The birthdate of the author.'
+        description: 'Optional The updated birthdate of the author.'
         required: false
-        example: '1985-02-15'
+        example: '1990-01-01'
         type: date
         enumValues: []
         exampleWasSpecified: true
@@ -307,7 +361,7 @@ endpoints:
         custom: []
       nationality:
         name: nationality
-        description: 'Optional The nationality of the author.'
+        description: 'Optional The updated nationality of the author.'
         required: false
         example: British
         type: string
@@ -317,7 +371,7 @@ endpoints:
         custom: []
     cleanBodyParameters:
       name: 'Jane Doe'
-      birthdate: '1985-02-15'
+      birthdate: '1990-01-01'
       nationality: British
     fileParameters: []
     responses:
@@ -327,7 +381,7 @@ endpoints:
           {
             "id": 1,
             "name": "Jane Doe",
-            "birthdate": "1985-02-15",
+            "birthdate": "1990-01-01",
             "nationality": "British"
           }
         headers: []
@@ -385,20 +439,20 @@ endpoints:
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required API version to use. Example: v1'
+      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters:
       id:
         name: id
         description: 'Author ID.'
         required: true
-        example: 5
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 5
+      id: 9
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -406,8 +460,11 @@ endpoints:
     fileParameters: []
     responses:
       -
-        status: 204
-        content: 'null'
+        status: 200
+        content: |-
+          {
+            "message": "Author deleted successfully."
+          }
         headers: []
         description: ''
         custom: []

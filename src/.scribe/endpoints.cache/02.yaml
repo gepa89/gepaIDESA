@@ -12,7 +12,7 @@ endpoints:
       groupDescription: ''
       subgroup: ''
       subgroupDescription: ''
-      title: 'Get a paginated list of books.'
+      title: 'Get a paginated, filtered, and sorted list of books.'
       description: ''
       authenticated: false
       custom: []
@@ -31,8 +31,52 @@ endpoints:
         exampleWasSpecified: true
         nullable: false
         custom: []
+      title:
+        name: title
+        description: 'Optional. Filter by book title.'
+        required: false
+        example: 'Harry Potter'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      isbn:
+        name: isbn
+        description: 'Optional. Filter by book ISBN.'
+        required: false
+        example: 123-4567890123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      order_by:
+        name: order_by
+        description: 'Optional. Field to sort by. Defaults to "id".'
+        required: false
+        example: title
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      order_dir:
+        name: order_dir
+        description: 'Optional. Sorting direction (asc or desc). Defaults to "asc".'
+        required: false
+        example: desc
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
     cleanUrlParameters:
       per_page: 20
+      title: 'Harry Potter'
+      isbn: 123-4567890123
+      order_by: title
+      order_dir: desc
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -75,7 +119,7 @@ endpoints:
         status: 400
         content: |-
           {
-            "message": "Invalid pagination parameters."
+            "message": "Invalid pagination or sorting parameters."
           }
         headers: []
         description: ''
@@ -226,14 +270,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 18
+        example: 10
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 18
+      id: 10
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -303,14 +347,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 3
+        example: 18
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 3
+      id: 18
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -432,14 +476,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 9
+        example: 14
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 9
+      id: 14
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

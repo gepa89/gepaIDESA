@@ -195,15 +195,15 @@ paths:
       security: []
   /api/authors:
     get:
-      summary: 'Get a list of authors with pagination.'
-      operationId: getAListOfAuthorsWithPagination
+      summary: 'Get a paginated, filtered, and sorted list of authors.'
+      operationId: getAPaginatedFilteredAndSortedListOfAuthors
       description: ''
       parameters:
         -
           in: header
           name: Accept-Version
           description: ''
-          example: 'string required API version to use. Example: v1'
+          example: 'string required The version of the API to use. Example: v1'
           schema:
             type: string
       responses:
@@ -218,6 +218,7 @@ paths:
                     -
                       id: 1
                       name: 'Author Name'
+                      email: author@example.com
                       birthdate: '1980-01-01'
                       nationality: American
                   links:
@@ -237,6 +238,7 @@ paths:
                       -
                         id: 1
                         name: 'Author Name'
+                        email: author@example.com
                         birthdate: '1980-01-01'
                         nationality: American
                     items:
@@ -248,6 +250,9 @@ paths:
                         name:
                           type: string
                           example: 'Author Name'
+                        email:
+                          type: string
+                          example: author@example.com
                         birthdate:
                           type: string
                           example: '1980-01-01'
@@ -284,6 +289,18 @@ paths:
                       total:
                         type: integer
                         example: 100
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Invalid pagination or sorting parameters.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Invalid pagination or sorting parameters.'
         500:
           description: ''
           content:
@@ -308,7 +325,7 @@ paths:
           in: header
           name: Accept-Version
           description: ''
-          example: 'string required API version to use. Example: v1'
+          example: 'string required The version of the API to use. Example: v1'
           schema:
             type: string
       responses:
@@ -416,6 +433,62 @@ paths:
           present:
             summary: 'When the value is present'
             value: 20
+      -
+        in: path
+        name: name
+        description: 'Optional parameter. Optional. Filter by author name.'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: John
+      -
+        in: path
+        name: email
+        description: 'Optional parameter. Optional. Filter by author email.'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: john@example.com
+      -
+        in: path
+        name: order_by
+        description: 'Optional parameter. Optional. Field to sort by. Defaults to "id".'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: name
+      -
+        in: path
+        name: order_dir
+        description: 'Optional parameter. Optional. Sorting direction (asc or desc). Defaults to "asc".'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: desc
   '/api/authors/{id}':
     get:
       summary: 'Get details of a specific author.'
@@ -426,7 +499,7 @@ paths:
           in: header
           name: Accept-Version
           description: ''
-          example: 'string required API version to use. Example: v1'
+          example: 'string required The version of the API to use. Example: v1'
           schema:
             type: string
       responses:
@@ -482,15 +555,15 @@ paths:
         - Authors
       security: []
     put:
-      summary: "Update an existing author's information."
-      operationId: updateAnExistingAuthorsInformation
+      summary: 'Update an existing author.'
+      operationId: updateAnExistingAuthor
       description: ''
       parameters:
         -
           in: header
           name: Accept-Version
           description: ''
-          example: 'string required API version to use. Example: v1'
+          example: 'string required The version of the API to use. Example: v1'
           schema:
             type: string
       responses:
@@ -503,7 +576,7 @@ paths:
                 example:
                   id: 1
                   name: 'Jane Doe'
-                  birthdate: '1985-02-15'
+                  birthdate: '1990-01-01'
                   nationality: British
                 properties:
                   id:
@@ -514,7 +587,7 @@ paths:
                     example: 'Jane Doe'
                   birthdate:
                     type: string
-                    example: '1985-02-15'
+                    example: '1990-01-01'
                   nationality:
                     type: string
                     example: British
@@ -577,17 +650,17 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Optional The name of the author.'
+                  description: 'Optional The updated name of the author.'
                   example: 'Jane Doe'
                   nullable: false
                 birthdate:
                   type: date
-                  description: 'Optional The birthdate of the author.'
-                  example: '1985-02-15'
+                  description: 'Optional The updated birthdate of the author.'
+                  example: '1990-01-01'
                   nullable: false
                 nationality:
                   type: string
-                  description: 'Optional The nationality of the author.'
+                  description: 'Optional The updated nationality of the author.'
                   example: British
                   nullable: false
       security: []
@@ -600,12 +673,22 @@ paths:
           in: header
           name: Accept-Version
           description: ''
-          example: 'string required API version to use. Example: v1'
+          example: 'string required The version of the API to use. Example: v1'
           schema:
             type: string
       responses:
-        204:
+        200:
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Author deleted successfully.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Author deleted successfully.'
         404:
           description: ''
           content:
@@ -638,14 +721,14 @@ paths:
         in: path
         name: id
         description: 'Author ID.'
-        example: 9
+        example: 3
         required: true
         schema:
           type: integer
   /api/books:
     get:
-      summary: 'Get a paginated list of books.'
-      operationId: getAPaginatedListOfBooks
+      summary: 'Get a paginated, filtered, and sorted list of books.'
+      operationId: getAPaginatedFilteredAndSortedListOfBooks
       description: ''
       parameters:
         -
@@ -755,11 +838,11 @@ paths:
               schema:
                 type: object
                 example:
-                  message: 'Invalid pagination parameters.'
+                  message: 'Invalid pagination or sorting parameters.'
                 properties:
                   message:
                     type: string
-                    example: 'Invalid pagination parameters.'
+                    example: 'Invalid pagination or sorting parameters.'
         500:
           description: ''
           content:
@@ -902,6 +985,62 @@ paths:
           present:
             summary: 'When the value is present'
             value: 20
+      -
+        in: path
+        name: title
+        description: 'Optional parameter. Optional. Filter by book title.'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: 'Harry Potter'
+      -
+        in: path
+        name: isbn
+        description: 'Optional parameter. Optional. Filter by book ISBN.'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: 123-4567890123
+      -
+        in: path
+        name: order_by
+        description: 'Optional parameter. Optional. Field to sort by. Defaults to "id".'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: title
+      -
+        in: path
+        name: order_dir
+        description: 'Optional parameter. Optional. Sorting direction (asc or desc). Defaults to "asc".'
+        required: true
+        schema:
+          type: string
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: desc
   '/api/books/{id}':
     get:
       summary: 'Get details of a specific book.'
@@ -1155,7 +1294,7 @@ paths:
         in: path
         name: id
         description: 'Book ID.'
-        example: 18
+        example: 10
         required: true
         schema:
           type: integer

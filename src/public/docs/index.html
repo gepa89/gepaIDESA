@@ -85,7 +85,7 @@
                 </li>
                                     <ul id="tocify-subheader-authors" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="authors-GETapi-authors">
-                                <a href="#authors-GETapi-authors">Get a list of authors with pagination.</a>
+                                <a href="#authors-GETapi-authors">Get a paginated, filtered, and sorted list of authors.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="authors-POSTapi-authors">
                                 <a href="#authors-POSTapi-authors">Create a new author.</a>
@@ -94,7 +94,7 @@
                                 <a href="#authors-GETapi-authors--id-">Get details of a specific author.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="authors-PUTapi-authors--id-">
-                                <a href="#authors-PUTapi-authors--id-">Update an existing author's information.</a>
+                                <a href="#authors-PUTapi-authors--id-">Update an existing author.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="authors-DELETEapi-authors--id-">
                                 <a href="#authors-DELETEapi-authors--id-">Delete an author.</a>
@@ -107,7 +107,7 @@
                 </li>
                                     <ul id="tocify-subheader-books" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="books-GETapi-books">
-                                <a href="#books-GETapi-books">Get a paginated list of books.</a>
+                                <a href="#books-GETapi-books">Get a paginated, filtered, and sorted list of books.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="books-POSTapi-books">
                                 <a href="#books-POSTapi-books">Create a new book.</a>
@@ -534,7 +534,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="authors-GETapi-authors">Get a list of authors with pagination.</h2>
+                                <h2 id="authors-GETapi-authors">Get a paginated, filtered, and sorted list of authors.</h2>
 
 <p>
 </p>
@@ -550,7 +550,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --get "http://localhost/api/authors" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept-Version: string required API version to use. Example: v1"</code></pre></div>
+    --header "Accept-Version: string required The version of the API to use. Example: v1"</code></pre></div>
 
 
 <div class="javascript-example">
@@ -561,7 +561,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 const headers = {
     "Authorization": "string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
-    "Accept-Version": "string required API version to use. Example: v1",
+    "Accept-Version": "string required The version of the API to use. Example: v1",
     "Accept": "application/json",
 };
 
@@ -583,6 +583,7 @@ fetch(url, {
         {
             &quot;id&quot;: 1,
             &quot;name&quot;: &quot;Author Name&quot;,
+            &quot;email&quot;: &quot;author@example.com&quot;,
             &quot;birthdate&quot;: &quot;1980-01-01&quot;,
             &quot;nationality&quot;: &quot;American&quot;
         }
@@ -599,6 +600,15 @@ fetch(url, {
         &quot;per_page&quot;: 10,
         &quot;total&quot;: 100
     }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Invalid pagination or sorting parameters.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -686,10 +696,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept-Version"                data-endpoint="GETapi-authors"
-               value="string required API version to use. Example: v1"
+               value="string required The version of the API to use. Example: v1"
                data-component="header">
     <br>
-<p>Example: <code>string required API version to use. Example: v1</code></p>
+<p>Example: <code>string required The version of the API to use. Example: v1</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
@@ -702,6 +712,50 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>Optional. Number of authors per page. Defaults to 10. Example: <code>20</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="GETapi-authors"
+               value="John"
+               data-component="url">
+    <br>
+<p>Optional. Filter by author name. Example: <code>John</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="GETapi-authors"
+               value="john@example.com"
+               data-component="url">
+    <br>
+<p>Optional. Filter by author email. Example: <code>john@example.com</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="order_by"                data-endpoint="GETapi-authors"
+               value="name"
+               data-component="url">
+    <br>
+<p>Optional. Field to sort by. Defaults to &quot;id&quot;. Example: <code>name</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order_dir</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="order_dir"                data-endpoint="GETapi-authors"
+               value="desc"
+               data-component="url">
+    <br>
+<p>Optional. Sorting direction (asc or desc). Defaults to &quot;asc&quot;. Example: <code>desc</code></p>
             </div>
                     </form>
 
@@ -721,7 +775,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/authors" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept-Version: string required API version to use. Example: v1" \
+    --header "Accept-Version: string required The version of the API to use. Example: v1" \
     --data "{
     \"name\": \"John Doe\",
     \"birthdate\": \"1980-01-01\",
@@ -738,7 +792,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 const headers = {
     "Authorization": "string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
-    "Accept-Version": "string required API version to use. Example: v1",
+    "Accept-Version": "string required The version of the API to use. Example: v1",
     "Accept": "application/json",
 };
 
@@ -868,10 +922,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept-Version"                data-endpoint="POSTapi-authors"
-               value="string required API version to use. Example: v1"
+               value="string required The version of the API to use. Example: v1"
                data-component="header">
     <br>
-<p>Example: <code>string required API version to use. Example: v1</code></p>
+<p>Example: <code>string required The version of the API to use. Example: v1</code></p>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -922,21 +976,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/authors/9" \
+    --get "http://localhost/api/authors/3" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept-Version: string required API version to use. Example: v1"</code></pre></div>
+    --header "Accept-Version: string required The version of the API to use. Example: v1"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/authors/9"
+    "http://localhost/api/authors/3"
 );
 
 const headers = {
     "Authorization": "string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
-    "Accept-Version": "string required API version to use. Example: v1",
+    "Accept-Version": "string required The version of the API to use. Example: v1",
     "Accept": "application/json",
 };
 
@@ -1054,10 +1108,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept-Version"                data-endpoint="GETapi-authors--id-"
-               value="string required API version to use. Example: v1"
+               value="string required The version of the API to use. Example: v1"
                data-component="header">
     <br>
-<p>Example: <code>string required API version to use. Example: v1</code></p>
+<p>Example: <code>string required The version of the API to use. Example: v1</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
@@ -1066,14 +1120,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-authors--id-"
-               value="9"
+               value="3"
                data-component="url">
     <br>
-<p>Author ID. Example: <code>9</code></p>
+<p>Author ID. Example: <code>3</code></p>
             </div>
                     </form>
 
-                    <h2 id="authors-PUTapi-authors--id-">Update an existing author&#039;s information.</h2>
+                    <h2 id="authors-PUTapi-authors--id-">Update an existing author.</h2>
 
 <p>
 </p>
@@ -1086,13 +1140,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/authors/11" \
+    "http://localhost/api/authors/7" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept-Version: string required API version to use. Example: v1" \
+    --header "Accept-Version: string required The version of the API to use. Example: v1" \
     --data "{
     \"name\": \"Jane Doe\",
-    \"birthdate\": \"1985-02-15\",
+    \"birthdate\": \"1990-01-01\",
     \"nationality\": \"British\"
 }"
 </code></pre></div>
@@ -1100,19 +1154,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/authors/11"
+    "http://localhost/api/authors/7"
 );
 
 const headers = {
     "Authorization": "string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
-    "Accept-Version": "string required API version to use. Example: v1",
+    "Accept-Version": "string required The version of the API to use. Example: v1",
     "Accept": "application/json",
 };
 
 let body = {
     "name": "Jane Doe",
-    "birthdate": "1985-02-15",
+    "birthdate": "1990-01-01",
     "nationality": "British"
 };
 
@@ -1133,7 +1187,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 1,
     &quot;name&quot;: &quot;Jane Doe&quot;,
-    &quot;birthdate&quot;: &quot;1985-02-15&quot;,
+    &quot;birthdate&quot;: &quot;1990-01-01&quot;,
     &quot;nationality&quot;: &quot;British&quot;
 }</code>
  </pre>
@@ -1249,10 +1303,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept-Version"                data-endpoint="PUTapi-authors--id-"
-               value="string required API version to use. Example: v1"
+               value="string required The version of the API to use. Example: v1"
                data-component="header">
     <br>
-<p>Example: <code>string required API version to use. Example: v1</code></p>
+<p>Example: <code>string required The version of the API to use. Example: v1</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
@@ -1261,10 +1315,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PUTapi-authors--id-"
-               value="11"
+               value="7"
                data-component="url">
     <br>
-<p>Author ID. Example: <code>11</code></p>
+<p>Author ID. Example: <code>7</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -1276,7 +1330,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="Jane Doe"
                data-component="body">
     <br>
-<p>Optional The name of the author. Example: <code>Jane Doe</code></p>
+<p>Optional The updated name of the author. Example: <code>Jane Doe</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>birthdate</code></b>&nbsp;&nbsp;
@@ -1284,10 +1338,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <i>optional</i> &nbsp;
                 <input type="text" style="display: none"
                               name="birthdate"                data-endpoint="PUTapi-authors--id-"
-               value="1985-02-15"
+               value="1990-01-01"
                data-component="body">
     <br>
-<p>Optional The birthdate of the author. Example: <code>1985-02-15</code></p>
+<p>Optional The updated birthdate of the author. Example: <code>1990-01-01</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>nationality</code></b>&nbsp;&nbsp;
@@ -1298,7 +1352,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value="British"
                data-component="body">
     <br>
-<p>Optional The nationality of the author. Example: <code>British</code></p>
+<p>Optional The updated nationality of the author. Example: <code>British</code></p>
         </div>
         </form>
 
@@ -1315,21 +1369,21 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/authors/5" \
+    "http://localhost/api/authors/9" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
-    --header "Accept-Version: string required API version to use. Example: v1"</code></pre></div>
+    --header "Accept-Version: string required The version of the API to use. Example: v1"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/authors/5"
+    "http://localhost/api/authors/9"
 );
 
 const headers = {
     "Authorization": "string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}",
     "Content-Type": "application/json",
-    "Accept-Version": "string required API version to use. Example: v1",
+    "Accept-Version": "string required The version of the API to use. Example: v1",
     "Accept": "application/json",
 };
 
@@ -1342,10 +1396,13 @@ fetch(url, {
 
 <span id="example-responses-DELETEapi-authors--id-">
             <blockquote>
-            <p>Example response (204):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <pre>
-<code>Empty response</code>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;Author deleted successfully.&quot;
+}</code>
  </pre>
             <blockquote>
             <p>Example response (404):</p>
@@ -1441,10 +1498,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Accept-Version"                data-endpoint="DELETEapi-authors--id-"
-               value="string required API version to use. Example: v1"
+               value="string required The version of the API to use. Example: v1"
                data-component="header">
     <br>
-<p>Example: <code>string required API version to use. Example: v1</code></p>
+<p>Example: <code>string required The version of the API to use. Example: v1</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <div style="padding-left: 28px; clear: unset;">
@@ -1453,10 +1510,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-authors--id-"
-               value="5"
+               value="9"
                data-component="url">
     <br>
-<p>Author ID. Example: <code>5</code></p>
+<p>Author ID. Example: <code>9</code></p>
             </div>
                     </form>
 
@@ -1464,7 +1521,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
     
 
-                                <h2 id="books-GETapi-books">Get a paginated list of books.</h2>
+                                <h2 id="books-GETapi-books">Get a paginated, filtered, and sorted list of books.</h2>
 
 <p>
 </p>
@@ -1541,7 +1598,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;message&quot;: &quot;Invalid pagination parameters.&quot;
+    &quot;message&quot;: &quot;Invalid pagination or sorting parameters.&quot;
 }</code>
  </pre>
             <blockquote>
@@ -1645,6 +1702,50 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="url">
     <br>
 <p>Optional. Number of books per page. Defaults to 10. Example: <code>20</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="title"                data-endpoint="GETapi-books"
+               value="Harry Potter"
+               data-component="url">
+    <br>
+<p>Optional. Filter by book title. Example: <code>Harry Potter</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>isbn</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="isbn"                data-endpoint="GETapi-books"
+               value="123-4567890123"
+               data-component="url">
+    <br>
+<p>Optional. Filter by book ISBN. Example: <code>123-4567890123</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order_by</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="order_by"                data-endpoint="GETapi-books"
+               value="title"
+               data-component="url">
+    <br>
+<p>Optional. Field to sort by. Defaults to &quot;id&quot;. Example: <code>title</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>order_dir</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="order_dir"                data-endpoint="GETapi-books"
+               value="desc"
+               data-component="url">
+    <br>
+<p>Optional. Sorting direction (asc or desc). Defaults to &quot;asc&quot;. Example: <code>desc</code></p>
             </div>
                     </form>
 
@@ -1879,7 +1980,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost/api/books/18" \
+    --get "http://localhost/api/books/10" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept-Version: string required The version of the API to use. Example: v1"</code></pre></div>
@@ -1887,7 +1988,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/books/18"
+    "http://localhost/api/books/10"
 );
 
 const headers = {
@@ -2027,10 +2128,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="GETapi-books--id-"
-               value="18"
+               value="10"
                data-component="url">
     <br>
-<p>Book ID. Example: <code>18</code></p>
+<p>Book ID. Example: <code>10</code></p>
             </div>
                     </form>
 
@@ -2047,7 +2148,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost/api/books/3" \
+    "http://localhost/api/books/18" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept-Version: string required The version of the API to use. Example: v1" \
@@ -2062,7 +2163,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/books/3"
+    "http://localhost/api/books/18"
 );
 
 const headers = {
@@ -2225,10 +2326,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="PUTapi-books--id-"
-               value="3"
+               value="18"
                data-component="url">
     <br>
-<p>Book ID. Example: <code>3</code></p>
+<p>Book ID. Example: <code>18</code></p>
             </div>
                             <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
@@ -2290,7 +2391,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost/api/books/9" \
+    "http://localhost/api/books/14" \
     --header "Authorization: string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}" \
     --header "Content-Type: application/json" \
     --header "Accept-Version: string required The version of the API to use. Example: v1"</code></pre></div>
@@ -2298,7 +2399,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost/api/books/9"
+    "http://localhost/api/books/14"
 );
 
 const headers = {
@@ -2431,10 +2532,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="number" style="display: none"
                step="any"               name="id"                data-endpoint="DELETEapi-books--id-"
-               value="9"
+               value="14"
                data-component="url">
     <br>
-<p>Book ID. Example: <code>9</code></p>
+<p>Book ID. Example: <code>14</code></p>
             </div>
                     </form>
 
