@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "acb997ee-58c3-4de8-90ae-54ebee04c6f7",
+		"name": "Laravel API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4979218",
+		"_collection_link": "https://universal-eclipse-670704.postman.co/workspace/Library~74583490-e4e6-4ff2-9f84-2b8c7c99d4f3/collection/4979218-acb997ee-58c3-4de8-90ae-54ebee04c6f7?action=share&source=collection_link&creator=4979218"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Enrique Paredes\",\n  \"email\": \"gepaxx89@gmail.com\",\n  \"password\": \"pass123.\",\n  \"password_confirmation\": \"pass123.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"gepa89@gmail.com\",\n  \"password\": \"passd123.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "List Authors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/authors/?name=Orwell&order_by=name&order_dir=desc&per_page=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Orwell"
+								},
+								{
+									"key": "order_by",
+									"value": "name"
+								},
+								{
+									"key": "order_dir",
+									"value": "desc"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"John Doe\",\n  \"birthdate\": \"1980-01-01\",\n  \"nationality\": \"American\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/authors/1s",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"1s"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Doe\",\n  \"birthdate\": \"1985-02-15\",\n  \"nationality\": \"British\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authors/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/authors/10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authors",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "List Books",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/books?per_page=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"books"
+							],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"My Book 2\",\n    \"isbn\": \"123-4567890123\",\n    \"published_date\": \"2022-01-01\",\n    \"author_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/books",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Book Title\",\n    \"isbn\": \"123-4567890123\",\n    \"published_date\": \"2022-01-01\",\n    \"author_id\": 2\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/books/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Version",
+								"value": "v1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{YOUR_AUTH_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/books/6",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "YOUR_AUTH_TOKEN",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

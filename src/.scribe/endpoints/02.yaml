@@ -268,14 +268,14 @@ endpoints:
         name: id
         description: 'Book ID.'
         required: true
-        example: 10
+        example: 18
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 10
+      id: 18
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -294,6 +294,15 @@ endpoints:
                 "id": 1,
                 "name": "Author Name"
             }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "message": "Invalid ID. The ID must be a numeric value."
           }
         headers: []
         description: ''
@@ -368,7 +377,7 @@ endpoints:
         custom: []
       isbn:
         name: isbn
-        description: 'Optional The updated ISBN of the book.'
+        description: 'Optional The ISBN of the book.'
         required: false
         example: 123-4567890123
         type: string
@@ -378,7 +387,7 @@ endpoints:
         custom: []
       published_date:
         name: published_date
-        description: 'Optional The updated publication date of the book.'
+        description: 'Optional The publication date of the book.'
         required: false
         example: '2022-01-01'
         type: date
@@ -388,9 +397,9 @@ endpoints:
         custom: []
       author_id:
         name: author_id
-        description: 'Optional The ID of the updated author.'
+        description: 'Optional The ID of the author.'
         required: false
-        example: 2
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: true
@@ -400,7 +409,7 @@ endpoints:
       title: 'Updated Book Title'
       isbn: 123-4567890123
       published_date: '2022-01-01'
-      author_id: 2
+      author_id: 1
     fileParameters: []
     responses:
       -
@@ -411,7 +420,7 @@ endpoints:
             "title": "Updated Book Title",
             "isbn": "123-4567890123",
             "published_date": "2022-01-01",
-            "author_id": 2
+            "author_id": 1
           }
         headers: []
         description: ''
@@ -468,20 +477,19 @@ endpoints:
     headers:
       Authorization: 'string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
-      Accept-Version: 'string required The version of the API to use. Example: v1'
     urlParameters:
       id:
         name: id
         description: 'Book ID.'
         required: true
-        example: 14
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 14
+      id: 9
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -493,6 +501,15 @@ endpoints:
         content: |-
           {
             "message": "Book deleted successfully."
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "message": "Invalid ID. The ID must be numeric."
           }
         headers: []
         description: ''

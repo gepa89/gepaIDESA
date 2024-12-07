@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "584c10ce-627e-4a70-b4e7-259911c385af",
+        "_postman_id": "453bdc36-9659-43e6-9bfd-ff80658be0fc",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -282,7 +282,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "3",
+                                    "value": "17",
                                     "description": "Author ID."
                                 }
                             ]
@@ -317,6 +317,12 @@
                         },
                         {
                             "header": [],
+                            "code": 400,
+                            "body": "{\n  \"message\": \"Invalid ID. The ID must be a numeric value.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
                             "code": 404,
                             "body": "{\n  \"message\": \"Author not found.\"\n}",
                             "name": ""
@@ -341,7 +347,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "7",
+                                    "value": "2",
                                     "description": "Author ID."
                                 }
                             ]
@@ -409,7 +415,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "9",
+                                    "value": "11",
                                     "description": "Author ID."
                                 }
                             ]
@@ -611,7 +617,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "10",
+                                    "value": "18",
                                     "description": "Book ID."
                                 }
                             ]
@@ -642,6 +648,12 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"id\": 1,\n  \"title\": \"Book Title\",\n  \"isbn\": \"123-4567890123\",\n  \"published_date\": \"2022-01-01\",\n  \"author\": {\n      \"id\": 1,\n      \"name\": \"Author Name\"\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"message\": \"Invalid ID. The ID must be a numeric value.\"\n}",
                             "name": ""
                         },
                         {
@@ -692,7 +704,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"title\":\"Updated Book Title\",\"isbn\":\"123-4567890123\",\"published_date\":\"2022-01-01\",\"author_id\":2}"
+                            "raw": "{\"title\":\"Updated Book Title\",\"isbn\":\"123-4567890123\",\"published_date\":\"2022-01-01\",\"author_id\":1}"
                         },
                         "description": "",
                         "auth": {
@@ -703,7 +715,7 @@
                         {
                             "header": [],
                             "code": 200,
-                            "body": "{\n  \"id\": 1,\n  \"title\": \"Updated Book Title\",\n  \"isbn\": \"123-4567890123\",\n  \"published_date\": \"2022-01-01\",\n  \"author_id\": 2\n}",
+                            "body": "{\n  \"id\": 1,\n  \"title\": \"Updated Book Title\",\n  \"isbn\": \"123-4567890123\",\n  \"published_date\": \"2022-01-01\",\n  \"author_id\": 1\n}",
                             "name": ""
                         },
                         {
@@ -738,7 +750,7 @@
                                 {
                                     "id": "id",
                                     "key": "id",
-                                    "value": "14",
+                                    "value": "9",
                                     "description": "Book ID."
                                 }
                             ]
@@ -748,10 +760,6 @@
                             {
                                 "key": "Content-Type",
                                 "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept-Version",
-                                "value": "string required The version of the API to use. Example: v1"
                             },
                             {
                                 "key": "Accept",
@@ -769,6 +777,12 @@
                             "header": [],
                             "code": 200,
                             "body": "{\n  \"message\": \"Book deleted successfully.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n  \"message\": \"Invalid ID. The ID must be numeric.\"\n}",
                             "name": ""
                         },
                         {

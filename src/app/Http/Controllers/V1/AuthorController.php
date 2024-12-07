@@ -75,20 +75,15 @@ class AuthorController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            // Validate pagination parameter
             $perPage = $this->validatePerPage($request);
-
-            // Get filters and sorting parameters from the request
             $filters = $request->only(['name', 'email']);
             $orderBy = $request->input('order_by', 'id');
             $orderDir = $request->input('order_dir', 'asc');
 
-            // Validate sorting direction
             if (!in_array($orderDir, ['asc', 'desc'])) {
                 return $this->errorResponse('Invalid order direction. Use "asc" or "desc".', 400);
             }
 
-            // Build query with filters
             $query = Author::query();
             foreach ($filters as $field => $value) {
                 if (!empty($value)) {
@@ -96,10 +91,7 @@ class AuthorController extends Controller
                 }
             }
 
-            // Apply sorting
             $query->orderBy($orderBy, $orderDir);
-
-            // Paginate results
             $authors = $query->paginate($perPage);
 
             return $this->successResponse($authors);
@@ -109,7 +101,6 @@ class AuthorController extends Controller
             return $this->errorResponse(self::ERR_FETCH_AUTHORS, 500);
         }
     }
-
 
     /**
      * Get details of a specific author.
@@ -128,6 +119,9 @@ class AuthorController extends Controller
      *   "birthdate": "1980-01-01",
      *   "nationality": "American"
      * }
+     * @response 400 {
+     *   "message": "Invalid ID. The ID must be a numeric value."
+     * }
      * @response 404 {
      *   "message": "Author not found."
      * }
@@ -135,11 +129,17 @@ class AuthorController extends Controller
      *   "message": "An error occurred while fetching the author."
      * }
      *
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be a numeric value.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $author = Author::findOrFail($id);
             return $this->successResponse($author);
@@ -230,11 +230,17 @@ class AuthorController extends Controller
      * }
      *
      * @param Request $request
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be a numeric value.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $author = Author::findOrFail($id);
             $validatedData = $this->validateAuthorData($request, $author->id);
@@ -270,11 +276,17 @@ class AuthorController extends Controller
      *   "message": "An error occurred while deleting the author."
      * }
      *
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be numeric.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $author = Author::findOrFail($id);
             $author->delete();
@@ -287,7 +299,18 @@ class AuthorController extends Controller
     }
 
     /**
-     * Validate the pagination parameter.
+     * Validate if a given ID is numeric.
+     *
+     * @param string $id
+     * @return bool
+     */
+    private function isValidId(string $id): bool
+    {
+        return ctype_digit($id);
+    }
+
+    /**
+     * Validate pagination parameters.
      *
      * @param Request $request
      * @return int
@@ -303,10 +326,8 @@ class AuthorController extends Controller
             throw new ValidationException($validator);
         }
 
-        $perPage = $request->get('per_page', 10);
-        return (int) $perPage;
+        return (int) $request->get('per_page', 10);
     }
-
 
     /**
      * Validate author data.
@@ -330,7 +351,7 @@ class AuthorController extends Controller
             throw new ValidationException($validator);
         }
 
-        return (array) $validator->validated();
+        return $validator->validated();
     }
 
     /**

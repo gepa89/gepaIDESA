@@ -78,20 +78,15 @@ class BookController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            // Validate pagination parameter
             $perPage = $this->validatePerPage($request);
-
-            // Get filters and sorting parameters from the request
             $filters = $request->only(['title', 'isbn']);
             $orderBy = $request->input('order_by', 'id');
             $orderDir = $request->input('order_dir', 'asc');
 
-            // Validate sorting direction
             if (!in_array($orderDir, ['asc', 'desc'])) {
                 return $this->errorResponse('Invalid order direction. Use "asc" or "desc".', 400);
             }
 
-            // Build query with filters
             $query = Book::with('author');
             foreach ($filters as $field => $value) {
                 if (!empty($value)) {
@@ -99,10 +94,7 @@ class BookController extends Controller
                 }
             }
 
-            // Apply sorting
             $query->orderBy($orderBy, $orderDir);
-
-            // Paginate results
             $books = $query->paginate($perPage);
 
             return $this->successResponse($books);
@@ -112,7 +104,6 @@ class BookController extends Controller
             return $this->errorResponse(self::ERR_FETCH_BOOKS, 500);
         }
     }
-
 
     /**
      * Get details of a specific book.
@@ -135,6 +126,9 @@ class BookController extends Controller
      *       "name": "Author Name"
      *   }
      * }
+     * @response 400 {
+     *   "message": "Invalid ID. The ID must be a numeric value."
+     * }
      * @response 404 {
      *   "message": "Book not found."
      * }
@@ -142,11 +136,17 @@ class BookController extends Controller
      *   "message": "An error occurred while fetching the book."
      * }
      *
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function show(int $id): JsonResponse
+    public function show(string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be a numeric value.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $book = Book::with('author')->findOrFail($id);
             return $this->successResponse($book);
@@ -216,19 +216,16 @@ class BookController extends Controller
      * @urlParam id int required Book ID.
      *
      * @bodyParam title string Optional The title of the book. Example: Updated Book Title
-     * @bodyParam isbn string Optional The updated ISBN of the book. Example: 123-4567890123
-     * @bodyParam published_date date Optional The updated publication date of the book. Example: 2022-01-01
-     * @bodyParam author_id int Optional The ID of the updated author. Example: 2
+     * @bodyParam isbn string Optional The ISBN of the book. Example: 123-4567890123
+     * @bodyParam published_date date Optional The publication date of the book. Example: 2022-01-01
+     * @bodyParam author_id int Optional The ID of the author. Example: 1
      *
      * @response 200 {
      *   "id": 1,
      *   "title": "Updated Book Title",
      *   "isbn": "123-4567890123",
      *   "published_date": "2022-01-01",
-     *   "author_id": 2
-     * }
-     * @response 404 {
-     *   "message": "Book not found."
+     *   "author_id": 1
      * }
      * @response 422 {
      *   "message": "Validation failed.",
@@ -236,16 +233,25 @@ class BookController extends Controller
      *       "title": ["The title field is required."]
      *   }
      * }
+     * @response 404 {
+     *   "message": "Book not found."
+     * }
      * @response 500 {
      *   "message": "An error occurred while updating the book."
      * }
      *
      * @param Request $request
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be a numeric value.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $book = Book::findOrFail($id);
             $validatedData = $this->validateBookData($request, $book->id);
@@ -267,12 +273,14 @@ class BookController extends Controller
      *
      * @header Authorization string required The authorization token. Example: Bearer {YOUR_AUTH_TOKEN}
      * @header Content-Type string required The format of the request body. Example: application/json
-     * @header Accept-Version string required The version of the API to use. Example: v1
      * 
      * @urlParam id int required Book ID.
      *
      * @response 200 {
      *   "message": "Book deleted successfully."
+     * }
+     * @response 400 {
+     *   "message": "Invalid ID. The ID must be numeric."
      * }
      * @response 404 {
      *   "message": "Book not found."
@@ -281,11 +289,17 @@ class BookController extends Controller
      *   "message": "An error occurred while deleting the book."
      * }
      *
-     * @param int $id
+     * @param string $id
      * @return JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $id): JsonResponse
     {
+        if (!$this->isValidId($id)) {
+            return $this->errorResponse('Invalid ID. The ID must be numeric.', 400);
+        }
+
+        $id = (int) $id;
+
         try {
             $book = Book::findOrFail($id);
             $book->delete();
@@ -298,7 +312,18 @@ class BookController extends Controller
     }
 
     /**
-     * Validate the pagination parameter.
+     * Validate if a given ID is numeric.
+     *
+     * @param string $id
+     * @return bool
+     */
+    private function isValidId(string $id): bool
+    {
+        return ctype_digit($id);
+    }
+
+    /**
+     * Validate pagination parameters.
      *
      * @param Request $request
      * @return int

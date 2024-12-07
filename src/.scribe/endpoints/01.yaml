@@ -253,14 +253,14 @@ endpoints:
         name: id
         description: 'Author ID.'
         required: true
-        example: 3
+        example: 17
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 3
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -275,6 +275,15 @@ endpoints:
             "name": "Author Name",
             "birthdate": "1980-01-01",
             "nationality": "American"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: |-
+          {
+            "message": "Invalid ID. The ID must be a numeric value."
           }
         headers: []
         description: ''
@@ -326,14 +335,14 @@ endpoints:
         name: id
         description: 'Author ID.'
         required: true
-        example: 7
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 7
+      id: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -443,14 +452,14 @@ endpoints:
         name: id
         description: 'Author ID.'
         required: true
-        example: 9
+        example: 11
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 9
+      id: 11
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
